@@ -34,7 +34,10 @@ app.use(express.static('public'));
 
 
 //Routes-----------------------------------------------------------
-require('./routes/html-routes.js')(app);
+
+app.use(require('./routes/html-routes.js'))
+app.use('/api', require('./routes/api-routes.js'))
+
 //-----------------------------------------------------------------
 
 orm.connectToDB();

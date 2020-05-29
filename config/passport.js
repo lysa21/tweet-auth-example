@@ -1,4 +1,3 @@
-var UserModel = require("../models/User.js");
 var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
 var userService = require("../services/userService.js");

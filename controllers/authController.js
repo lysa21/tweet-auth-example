@@ -10,14 +10,6 @@ module.exports = {
       otherAction: "Signin",
     });
   },
-  index: function (req, res) {
-    res.render("index", {
-      welcomeText: "Sign In",
-      actionBtn: "signin",
-      message: req.flash("error")[0],
-      otherAction: "Signup",
-    });
-  },
   create: function (req, res) {
     var user = new UserModel(req.body);
     userService.create(user, function (status, err) {
