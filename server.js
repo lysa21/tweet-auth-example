@@ -1,12 +1,12 @@
-var express = require('express');
-var flash = require('connect-flash');
-var app = express();
-var exphbs = require('express-handlebars');
-var bodyParser = require('body-parser');
-var passport = require('passport');
-var session = require('express-session');
-var orm = require('./db/orm.js');
-var PORT = 8080;
+const express = require('express');
+const flash = require('connect-flash');
+const app = express();
+const exphbs = require('express-handlebars');
+const bodyParser = require('body-parser');
+const passport = require('passport');
+const session = require('express-session');
+const orm = require('./db/orm.js');
+const PORT = 8080;
 
 //Handlebars-------------------------------------------------------
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
