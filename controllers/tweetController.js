@@ -1,23 +1,22 @@
 
-var TweetModel = require("../models/Tweet.js");
-var tweetService = require("../services/tweetService");
+var Tweet = require("../models/Tweet.js");
 
 module.exports = {
   create: function (req, res) {
-    var tweet = new TweetModel(req.body);
-    tweetService.create(tweet, function (status, err) {
+    var tweet = new Tweet(req.body);
+    Tweet.create(tweet, function (status, err) {
       if (err) {
         res.redirect("/signup");
         return false;
       }
-      res.redirect("/authenticated");
+      res.redirect("/home");
     });
   },
   index: function (req, res) {
-      tweetService.findTweets((err, tweets) => {
+      Tweet.findTweets((err, tweets) => {
         console.log(req.user, tweets);
     
-        res.render("authenticated", {
+        res.render("home", {
           username: req.user.username,
           tweets: tweets
         });

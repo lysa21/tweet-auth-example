@@ -1,18 +1,26 @@
 
-var UserModel = require("../models/User.js");
-var userService = require("../services/userService");
+var User = require("../models/User.js");
 
 module.exports = {
   signup: function (req, res) {
-    res.render("index", {
+    res.render("auth", {
       welcomeText: "Sign Up",
       actionBtn: "signup",
       otherAction: "Signin",
+    
+    });
+  },
+  signin: function (req, res) {
+    res.render("auth", {
+      welcomeText: "Sign In",
+      actionBtn: "signin",
+      message: req.flash("error")[0],
+      otherAction: "Signup",
     });
   },
   create: function (req, res) {
-    var user = new UserModel(req.body);
-    userService.create(user, function (status, err) {
+    var user = new User(req.body);
+    User.create(user, function (err) {
       if (err) {
         res.redirect("/signup");
         return false;

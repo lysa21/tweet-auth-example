@@ -8,6 +8,8 @@ const session = require('express-session');
 const orm = require('./db/orm.js');
 const PORT = 8080;
 
+require('./config/passport')(passport);
+
 //Handlebars-------------------------------------------------------
 app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
@@ -15,9 +17,9 @@ app.set('view engine', 'handlebars');
 
 //Middleware-------------------------------------------------------
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded());
 app.use(bodyParser.text());
-app.use(bodyParser.json({type:'application/vnd.api+json'}));
+app.use(bodyParser.json());
 
 //session is used to keep the user logged in 
 app.use(session({ secret: 'secret', cookie: { maxAge: 60000 }, resave: true, saveUninitialized: true}))

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : Dim 24 mai 2020 à 13:19
+-- Généré le : lun. 01 juin 2020 à 23:09
 -- Version du serveur :  10.3.22-MariaDB-1ubuntu1
 -- Version de PHP : 7.4.3
 
@@ -27,32 +27,77 @@ USE `commons`;
 -- --------------------------------------------------------
 
 --
--- Structure de la table `users`
+-- Structure de la table `tweet`
 --
 
-CREATE TABLE `users` (
-  `userId` int(11) NOT NULL,
-  `username` varchar(100) DEFAULT NULL,
-  `password` varchar(100) DEFAULT NULL
+CREATE TABLE `tweet` (
+  `id` int(11) NOT NULL,
+  `content` varchar(255) NOT NULL,
+  `id_user` int(11) DEFAULT NULL,
+  `created_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 --
--- Index pour la table `users`
+-- Structure de la table `user`
 --
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`userId`),
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `username` varchar(100) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `follow` (
+  `id_followed` int(11) NOT NULL,
+  `id_follower` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+--
+-- Index pour la table `tweet`
+--
+ALTER TABLE `tweet`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_user` (`id_user`);
+
+--
+-- Index pour la table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `username` (`username`);
 
+
+ALTER TABLE `follow`
+  ADD KEY `id_followed` (`id_followed`),
+  ADD KEY `id_follower` (`id_follower`);
 --
--- AUTO_INCREMENT pour les tables déchargées
+-- AUTO_INCREMENT pour la table `tweet`
+--
+ALTER TABLE `tweet`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT pour la table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- Contraintes pour les tables déchargées
 --
 
 --
--- AUTO_INCREMENT pour la table `users`
+-- Contraintes pour la table `tweet`
 --
-ALTER TABLE `users`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `tweet`
+  ADD CONSTRAINT `tweet_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
+
+ALTER TABLE `follow`
+  ADD CONSTRAINT `follow_ibfk_1` FOREIGN KEY (`id_follower`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `follow_ibfk_2` FOREIGN KEY (`id_followed`) REFERENCES `user` (`id`);
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
