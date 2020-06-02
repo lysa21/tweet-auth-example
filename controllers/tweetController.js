@@ -1,4 +1,3 @@
-
 var Tweet = require("../models/Tweet.js");
 
 module.exports = {
@@ -12,14 +11,12 @@ module.exports = {
       res.redirect("/home");
     });
   },
-  index: function (req, res) {
-      Tweet.findTweets((err, tweets) => {
-        console.log(req.user, tweets);
-    
-        res.render("home", {
-          username: req.user.username,
-          tweets: tweets
-        });
-      })
-  }
+  index: async function (req, res) {
+    let ttt = await Tweet.find();
+    console.log(req.user);
+    res.render("home", {
+      username: req.user.username,
+      tweets: ttt,
+    });
+  },
 };

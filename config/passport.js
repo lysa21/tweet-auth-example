@@ -1,8 +1,7 @@
-var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
 var User = require("../models/User");
 
-module.exports = () => {
+module.exports = (passport) => {
   //Setting the strategy for Passport
   passport.use(
     new LocalStrategy({ passReqToCallback: true }, function (req, username, password, done) {
