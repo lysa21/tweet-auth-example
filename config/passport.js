@@ -1,11 +1,12 @@
-var LocalStrategy = require("passport-local").Strategy;
 var User = require("../models/User");
+var LocalStrategy = require("passport-local").Strategy;
 
 module.exports = (passport) => {
   //Setting the strategy for Passport
   passport.use(
     new LocalStrategy({ passReqToCallback: true }, function (req, username, password, done) {
       User.findOne(username, function (err, user) {
+        console.log(user)
         user = user[0];
         if (err) return done(err);
 

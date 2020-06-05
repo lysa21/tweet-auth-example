@@ -1,30 +1,31 @@
 const express = require("express");
 const authRouter = express.Router();
 const auth_controller = require("./../../controllers/authController");
-const passport = require('passport');
+const passport = require("passport");
+
+const redirectIfAuth = require("./../../middleware/redirectIfAuth.js")
 
 
-authRouter.get("/",  auth_controller.signin);
+authRouter.post("/signup", auth_controller.create);
 
-authRouter.get("/signin", function (req, res) {
-  res.redirect("/");
-});
-
-authRouter.get("/signup", auth_controller.signup);
 //POSTs
 authRouter.post(
   "/signin",
   passport.authenticate("local", { failureRedirect: "/", failureFlash: "Wrong Username or Password" }),
-  function (req, res) {
+   (req, res) => {
     console.log(req.user);
     res.redirect("/home");
   }
 );
 
-authRouter.post("/signup", auth_controller.create);
 
-authRouter.get("/logout", function (req, res) {
+authRouter.get("/logout",  (req, res) => {
   req.logout();
   res.redirect("/");
 });
+
+
+authRouter.get("/", redirectIfAuth, auth_controller.signin);
+authRouter.get("/signup", redirectIfAuth, auth_controller.signup);
+
 module.exports = authRouter;

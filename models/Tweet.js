@@ -5,13 +5,13 @@ let connection = orm.connectToDB();
 
 class Tweet {
   constructor(props) {
-	this.content = props.content;
-	this.created_at = new Date();
+    this.content = props.content;
+    this.created_at = new Date();
   }
 }
 //mysql
 // Tweet.find = (callback) => {
-  
+
 //   connection.query("SELECT * FROM tweet", function (err, tweets) {
 //     console.log(tweets);
 //     callback(err, tweets);
@@ -21,15 +21,19 @@ class Tweet {
 //mysql2
 Tweet.find = async () => {
   const [rows, fields] = await orm2.execute("SELECT * FROM tweet");
-  console.log('tutu', rows, fields);
+  console.log("tutu", rows, fields);
   return rows;
 };
 
-Tweet.create = (tweetObj, callback) => {
-  connection.query("INSERT INTO tweet SET ?", tweetObj, function (err, results) {
-    if (err) return callback(false, err);
-    callback(null);
-  });
+Tweet.create = async (tweetObj) => {
+  let sql = "Insert into tweet (content, created_at) values (?, ?)";
+  const [results, fields] = await orm2.execute(sql, [tweetObj.content, tweetObj.created_at]);
+
+  return results;
+  // connection.query("INSERT INTO tweet SET ?", tweetObj, function (err, results) {
+  //   if (err) return callback(false, err);
+  //   callback(null);
+  // });
 };
 
 module.exports = Tweet;

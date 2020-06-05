@@ -17,9 +17,7 @@ app.set('view engine', 'handlebars');
 
 //Middleware-------------------------------------------------------
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
-app.use(bodyParser.text());
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 
 //session is used to keep the user logged in 
 app.use(session({ secret: 'secret', cookie: { maxAge: 60000 }, resave: true, saveUninitialized: true}))

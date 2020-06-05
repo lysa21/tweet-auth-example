@@ -3,19 +3,11 @@ var User = require("../models/User.js");
 
 module.exports = {
   signup: function (req, res) {
-    res.render("auth", {
-      welcomeText: "Sign Up",
-      actionBtn: "signup",
-      otherAction: "Signin",
-    
-    });
+    res.render("signup");
   },
   signin: function (req, res) {
-    res.render("auth", {
-      welcomeText: "Sign In",
-      actionBtn: "signin",
+    res.render("signin", {
       message: req.flash("error")[0],
-      otherAction: "Signup",
     });
   },
   create: function (req, res) {

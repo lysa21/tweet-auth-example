@@ -9,8 +9,9 @@ class User {
   }
 }
 
-User.create = (userObj, callback) => {
-  connection.query("INSERT INTO user SET ?", userObj, function (err, results) {
+User.create = (user, callback) => {
+  ///verifier pas de doublon email
+  connection.query("INSERT INTO user SET ?", user, function (err, results) {
     if (err) return callback(err);
     callback(null);
   });
