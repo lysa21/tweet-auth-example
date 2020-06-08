@@ -9,5 +9,6 @@ htmlRouter.use(require("./html/auth.js"));
 htmlRouter.use(isAuth)
 htmlRouter.get("/home", tweet_controller.index);
 htmlRouter.post("/tweet", tweet_controller.create);
+//htmlRouter.get("/profil/:id", auth_controller.show);
 
 module.exports = htmlRouter;

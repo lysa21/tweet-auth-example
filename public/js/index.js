@@ -1,28 +1,39 @@
-
-const timeline = () => {
+const timeline = (template) => {
   let options = {};
   options.headers = {};
   options.headers["X-Requested-With"] = "XMLHttpRequest";
+  let last = document.querySelector('.tweets span');
 
-  fetch("/api/tweets", options)
+console.log(last)
+
+  fetch(`/api/tweets?id=${last.id}`, options)
     .then((res) => res.json())
     .then((res) => {
-      var placeHolder = (document.querySelector(".timeline .tweets").innerHTML = "");
+      var compiledTemplate = Handlebars.compile(template);
+      var placeHolder = document.querySelector(".timeline .tweets > div");
+      console.log(res)
+      if (res.tweets.length)
+      {
+        placeHolder.insertAdjacentHTML('beforebegin', compiledTemplate(res))
+        last.remove();
+      }
+     
 
-      var template = Handlebars.compile("{{#each tweets}}\
-    <div>\
-        {{content}}\
-    </div>\
-{{/each}}");
-      var placeHolder = document.querySelector(".timeline .tweets");
-
-      console.log(res);
-      placeHolder.innerHTML = template(res);
     })
-    .catch();
+    .catch(function (e) {
+      console.log(e);
+    });
 };
 
-timeline();
-setInterval(() => {
-  timeline();
-}, 5000);
+const refreshTimeline = async () => {
+  let res = await fetch("./ajax/tweets.handlebars");
+  let template = await res.text();
+
+  timeline(template);
+  setInterval(() => {
+    timeline(template);
+  }, 5000);
+};
+
+
+refreshTimeline()

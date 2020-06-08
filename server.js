@@ -29,7 +29,9 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.static('public'));
+app.use('/public', express.static(__dirname + '/public'));
+app.use('/ajax', express.static(__dirname + '/views/partials/ajax'));
+
 //-----------------------------------------------------------------
 
 

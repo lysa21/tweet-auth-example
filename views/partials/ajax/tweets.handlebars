@@ -1,0 +1,10 @@
+{{#if tweets.[0]}}
+    <span id={{tweets.[0].id}}></span>
+{{/if}}
+{{#each tweets}}
+    <div>
+        <p>@{{username}}</p>
+        <p>{{content}}<p>
+    </div>
+    <hr class="my-4">
+{{/each}}

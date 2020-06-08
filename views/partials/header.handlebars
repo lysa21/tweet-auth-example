@@ -1,26 +1,43 @@
-{{#unless username}}
-	<a href="" class="btn">Se connecter</a>
-{{/unless}}
-<div class="header">
-        <div class="btn " type="submit"> <i class="tweet fab fa-twitter fa-fw"></i></h1></div>
-        <div class="" type="submit">
+<div class="col-1 col-xs-1 col-sm-1 col-md-2 header">
+    {{#unless username}}
+        <a href="" class="btn">Se connecter</a>
+    {{/unless}}
+    <div class="header-nav">
+        <div> <i class="tweet fab fa-twitter fa-3x"></i>
+        </div>
+        <div class="link">
+            <i class="fa fa-home fa-1x" aria-hidden="true"></i>
             <h5>Accueil</h5>
         </div>
-        <div class="" type="submit">
-            <h5>Tweets</h5>
+        <div class="link">
+            <h5>Explorer</h5>
         </div>
-        <div class="" type="submit">
-            <h5>Compte utilisateur</h5>
+        <div class="link">
+            <h5>Notification</h5>
         </div>
-        <div class="" type="submit">
-            <h5>Profil utilisateur</h5>
+        <div class="link">
+            <i class="fa fa-envelope-o fa-1x" aria-hidden="true"></i>
+            <h5>Messages</h5>
         </div>
-   
-        <div class=" div " type="submit">
-            <h5>Tweet</h5>
+        <div class="link">
+            <h5>Signets</h5>
         </div>
-    <div>
-        <a href="/logout">Logout</a>
-        <p>{{username}}</p>
+        <div class="link">
+            <h5>Profil</h5>
+        </div>
+        <div class="link">
+            <h5>Plus</h5>
+        </div>
+        <div class="link">
+            <button class="tweeter button btn btn-lg">Tweeter</button>
+        </div>
+        <div class="account">
+            <a href="/logout">Logout</a>
+            <span>{{username}}</span>
+            <span>@{{username}}</span>
+
+        </div>
     </div>
+
+
 </div>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : lun. 01 juin 2020 à 23:09
+-- Généré le : Dim 07 juin 2020 à 19:41
 -- Version du serveur :  10.3.22-MariaDB-1ubuntu1
 -- Version de PHP : 7.4.3
 
@@ -27,6 +27,17 @@ USE `commons`;
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `follow`
+--
+
+CREATE TABLE `follow` (
+  `id_followed` int(11) NOT NULL,
+  `id_follower` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `tweet`
 --
 
@@ -37,6 +48,7 @@ CREATE TABLE `tweet` (
   `created_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `user`
@@ -44,14 +56,22 @@ CREATE TABLE `tweet` (
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
-  `username` varchar(100) DEFAULT NULL,
-  `password` varchar(100) DEFAULT NULL
+  `username` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `created_at` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE `follow` (
-  `id_followed` int(11) NOT NULL,
-  `id_follower` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+--
+-- Déchargement des données de la table `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `password`, `email`, `created_at`) VALUES
+(40, 'tututu', 'tututu', '', '2020-06-07'),
+(41, 'tytyy', 'tytyy', '', '2020-06-07'),
+(44, 'tututup', 'tututup', '', '2020-06-07');
+
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `user_like`
@@ -67,12 +87,11 @@ CREATE TABLE `user_like` (
 --
 
 --
--- Index pour la table `user_like`
+-- Index pour la table `follow`
 --
-ALTER TABLE `user_like`
-  ADD KEY `id_tweet` (`id_tweet`),
-  ADD KEY `id_user` (`id_user`);
-
+ALTER TABLE `follow`
+  ADD KEY `id_followed` (`id_followed`),
+  ADD KEY `id_follower` (`id_follower`);
 
 --
 -- Index pour la table `tweet`
@@ -88,28 +107,45 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `username` (`username`);
 
+--
+-- Index pour la table `user_like`
+--
+ALTER TABLE `user_like`
+  ADD KEY `id_tweet` (`id_tweet`),
+  ADD KEY `id_user` (`id_user`);
 
-ALTER TABLE `follow`
-  ADD KEY `id_followed` (`id_followed`),
-  ADD KEY `id_follower` (`id_follower`);
-
-
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
 
 --
 -- AUTO_INCREMENT pour la table `tweet`
 --
 ALTER TABLE `tweet`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- Contraintes pour les tables déchargées
 --
+
+--
+-- Contraintes pour la table `follow`
+--
+ALTER TABLE `follow`
+  ADD CONSTRAINT `follow_ibfk_1` FOREIGN KEY (`id_follower`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `follow_ibfk_2` FOREIGN KEY (`id_followed`) REFERENCES `user` (`id`);
+
+--
+-- Contraintes pour la table `tweet`
+--
+ALTER TABLE `tweet`
+  ADD CONSTRAINT `tweet_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
 
 --
 -- Contraintes pour la table `user_like`
@@ -117,17 +153,6 @@ ALTER TABLE `user`
 ALTER TABLE `user_like`
   ADD CONSTRAINT `user_like_ibfk_1` FOREIGN KEY (`id_tweet`) REFERENCES `tweet` (`id`),
   ADD CONSTRAINT `user_like_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
-COMMIT;
---
--- Contraintes pour la table `tweet`
---
-ALTER TABLE `tweet`
-  ADD CONSTRAINT `tweet_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
-
-ALTER TABLE `follow`
-  ADD CONSTRAINT `follow_ibfk_1` FOREIGN KEY (`id_follower`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `follow_ibfk_2` FOREIGN KEY (`id_followed`) REFERENCES `user` (`id`);
-
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
